@@ -11,6 +11,7 @@ class CityForm(forms.ModelForm):
         'class': 'form-control',
         'placeholder': 'Введите название города'
     }))
+
     class Meta:
         model = City
         fields = ('name',)
