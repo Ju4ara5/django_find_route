@@ -3,11 +3,11 @@ from django.urls import reverse_lazy
 
 from cities.forms import CityForm
 from cities.models import City
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, UpdateView
 
 __all__ = (
     'home',
-    'CityDetailView', 'CityCreateView'
+    'CityDetailView', 'CityCreateView', 'CityUpdateView'
 )
 
 
@@ -43,3 +43,14 @@ class CityCreateView(CreateView):
     form_class = CityForm
     template_name = 'cities/create.html'
     success_url = reverse_lazy('cities:home')  # указываем на какую страницу перейти после добавления нового города
+
+
+# класс создания нового города:
+class CityUpdateView(UpdateView):
+    model = City
+    form_class = CityForm
+    template_name = 'cities/update.html'
+    success_url = reverse_lazy('cities:home')
+
+
+

@@ -16,5 +16,7 @@ class City(models.Model):
         verbose_name_plural = 'Города'
         ordering = ['name']  # сортируем базу данных таблицы в алфавитном порядке
 
+    # Сюда (на детализацию записи) переходим после нажатия кнопки 'Сохранить'(новый город):
+    # Это по умолчанию, если не указать во views / class CityCreateView(CreateView) / success_url...
     def get_absolute_url(self):
         return reverse('cities:detail', kwargs={'pk': self.pk})
