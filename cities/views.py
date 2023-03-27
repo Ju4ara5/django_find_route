@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
@@ -42,27 +44,31 @@ class CityDetailView(DetailView):
 
 
 # класс создания нового города:
-class CityCreateView(CreateView):
+class CityCreateView(SuccessMessageMixin, CreateView):
     model = City
     form_class = CityForm
     template_name = 'cities/create.html'
     success_url = reverse_lazy('cities:home')  # указываем на какую страницу перейти после добавления нового города
+    success_message = "Город успешно создан"
 
 
 # класс редактирования нового города:
-class CityUpdateView(UpdateView):
+class CityUpdateView(SuccessMessageMixin, UpdateView):
     model = City
     form_class = CityForm
     template_name = 'cities/update.html'
     success_url = reverse_lazy('cities:home')
+    success_message = "Город успешно отредактирован."
 
 
 class CityDeleteView(DeleteView):
     model = City
-    CityListView = 'cities/delete.html'
+    template_name = 'cities/delete.html'
     success_url = reverse_lazy('cities:home')
-#    def get(self, request, *args, **kwargs):
-#        return self.post(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        messages.success(request, 'Город будет удалён.')
+        return self.post(request, *args, **kwargs)
 
 
 class CityListView(ListView):
